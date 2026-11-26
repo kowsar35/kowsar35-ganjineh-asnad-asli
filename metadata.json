@@ -1,0 +1,6 @@
+{
+  "name": "گنجینه اسناد (Ganjineh Asnad)",
+  "description": "گنجینه اسناد - Personal document, text, and multimedia archive application",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

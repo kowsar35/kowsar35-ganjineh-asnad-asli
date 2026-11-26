@@ -1,0 +1,1694 @@
+# MASTER DEVELOPMENT PROMPT
+# GANJINEH ASNAD — ANDROID DOCUMENT AND MULTIMEDIA ARCHIVE APPLICATION
+
+## 1. ROLE AND PROJECT OBJECTIVE
+
+Act as a senior Android software architect, Kotlin developer, UI/UX designer, database engineer, multimedia developer, and software quality assurance engineer.
+
+Your task is to design, develop, test, and deliver a complete, production-quality Android application named:
+
+**Persian Name:** گنجینه اسناد  
+**English Name:** Ganjineh Asnad  
+**Application Version:** 1  
+**Developer:** Abbas Ebrahimi  
+**Persian Release Date:** آذرماه ۱۴۰۵ (Azar 1405)  
+**Primary Language:** Persian  
+**Platform:** Android  
+**User Interface Direction:** Right-to-left (RTL)  
+**Design Style:** Modern, elegant, professional, and minimalist.
+
+Ganjineh Asnad is a personal document, text, and multimedia archive application.
+
+The application must allow users to create, organize, edit, search, store, play, import, export, back up, and restore their personal information.
+
+It must support:
+
+- Text documents and notes.
+- AI prompts.
+- Educational materials.
+- Personal documents.
+- Audio recordings and audio files.
+- Images and photographs.
+- Video files and educational videos.
+- PDF documents.
+- Word documents.
+- Excel spreadsheets.
+- Other supported attachments.
+
+The application must be fully functional offline for its core features.
+
+**IMPORTANT DEVELOPMENT PRINCIPLE:**
+
+Build a real working application, not a UI prototype or collection of demonstration screens.
+
+Every visible button, menu item, editor feature, import operation, playback control, database operation, backup function, and restore function must perform its advertised action.
+
+Do not create fake data, simulated functionality, empty placeholder screens, or controls that do nothing.
+
+---
+
+# 2. CRITICAL PRODUCT RULE: EMPTY INITIAL APPLICATION
+
+The application must start with a completely empty user content area.
+
+DO NOT create any predefined user content.
+
+Strictly prohibited:
+
+- Predefined folders.
+- Predefined subfolders.
+- Predefined groups.
+- Predefined document categories.
+- Predefined tags or labels.
+- Sample documents.
+- Sample notes.
+- Sample AI prompts.
+- Sample educational materials.
+- Sample images.
+- Sample audio recordings.
+- Sample videos.
+- Demonstration files.
+- Prepopulated user database records.
+
+The user must have complete freedom to create their own folders, subfolders, documents, and personal organization structure.
+
+The database must start without any user-created content.
+
+System navigation sections such as All Documents, Recent Documents, Favorites, Audio Library, Settings, and Trash are allowed. These are system views, not predefined user categories or folders.
+
+Do not implement any tagging or labeling feature anywhere in the application, including the database, menus, search filters, and editor.
+
+When the application is opened for the first time, display a clean and welcoming empty state with a simple message in Persian:
+
+"هنوز سندی ایجاد نکرده‌اید"
+
+Provide a button to create the first document or folder.
+
+Do not automatically create a folder when the application starts.
+
+---
+
+# 3. APPLICATION ARCHITECTURE AND TECHNOLOGY
+
+Develop a native Android application.
+
+Preferred technology stack:
+
+- Kotlin.
+- Jetpack Compose.
+- Material 3.
+- Room Database.
+- SQLite.
+- Android DataStore for preferences.
+- Android Storage Access Framework (SAF) for importing and exporting files.
+- AndroidX Media3 / ExoPlayer for audio and video playback.
+- WorkManager for scheduled background backup operations where supported.
+
+Use stable, supported Android development libraries.
+
+Choose a suitable Android minimum SDK based on device compatibility and application requirements.
+
+Use a stable and appropriate compile SDK and target SDK compatible with the installed Android development environment.
+
+Choose a unique, stable Android application ID if none has been supplied. Document the selected application ID and never change it silently in subsequent builds.
+
+Keep the architecture modular, maintainable, and suitable for future Windows application integration.
+
+Recommended architectural separation:
+
+- Presentation Layer.
+- Business Logic Layer.
+- Data Layer.
+- Database Layer.
+- Media Storage Layer.
+- Backup and Restore Layer.
+- Import and Export Layer.
+
+Use clean coding practices, appropriate error handling, and stable database migrations.
+
+---
+
+# 4. MODERN USER INTERFACE AND DESIGN
+
+Create a polished, modern, minimalist interface.
+
+The application must look professional without becoming visually crowded.
+
+Design requirements:
+
+- Fully Persian user interface.
+- Correct RTL layout across all screens.
+- Clean typography.
+- Comfortable spacing.
+- Modern icons.
+- Subtle animations.
+- Rounded elements used consistently.
+- Clear visual hierarchy.
+- Responsive layouts for different Android screen sizes.
+- Good usability on both phones and tablets.
+
+Avoid unnecessary cards, decorations, dashboards, and visual clutter.
+
+The main interface should prioritize fast access to documents, folders, search, and media.
+
+## 4.1 Color Themes
+
+Provide multiple selectable themes.
+
+At minimum, include:
+
+1. Ocean Blue.
+2. Emerald Green.
+3. Modern Purple.
+4. Turquoise.
+5. Professional Navy.
+6. Soft Pink.
+7. Warm Orange.
+8. Minimal Gray.
+
+Each theme should support both Light Mode and Dark Mode.
+
+Theme changes must immediately apply across the entire application.
+
+Save the selected theme and restore it after restarting the application.
+
+Do not hardcode different theme colors in individual screens. Use a centralized theme system.
+
+---
+
+# 5. FONT MANAGEMENT
+
+The application must include three font families:
+
+1. IRANSans.
+2. Tahoma.
+3. Yekan.
+
+The developer will provide the actual font files.
+
+Integrate the supplied font files into the application's internal resources.
+
+Suggested asset organization:
+
+assets/fonts/
+- IRANSans font files.
+- Tahoma font files.
+- Yekan font files.
+
+Do not fabricate font files or claim that a font has been integrated when its actual font binary is missing.
+
+If the font files are not yet available, implement the complete font-selection architecture and clearly report which font assets are still required.
+
+## 5.1 Font Selection
+
+Provide separate font selection settings for:
+
+- The entire application interface.
+- The document editor.
+
+The user must be able to select IRANSans, Tahoma, or Yekan.
+
+The selected font must apply consistently to all relevant screens, menus, document lists, settings, dialogs, and editor content.
+
+## 5.2 Font Size
+
+Provide adjustable font sizes from 10 to 24.
+
+The user must be able to change:
+
+- General application font size.
+- Editor default font size.
+- Selected text font size.
+
+The selected font and font size must remain saved after application restarts.
+
+Changing font size must not break the layout or cause text clipping.
+
+---
+
+# 6. MAIN NAVIGATION DRAWER
+
+Create a modern expandable side navigation drawer.
+
+The menu must contain:
+
+1. Home.
+2. All Documents.
+3. Folders.
+4. Favorites / Starred Documents.
+5. Recent Documents.
+6. Audio Library.
+7. Images.
+8. Videos.
+9. Attachments.
+10. Trash.
+11. Backup and Restore.
+12. Settings.
+13. About.
+
+The folder structure must be displayed as an expandable tree inside the navigation drawer or its folder section.
+
+Users must be able to expand and collapse folder branches.
+
+Display real-time item counts beside relevant menu items.
+
+Examples:
+
+- All Documents (125).
+- Folders (18).
+- Favorites (12).
+- Audio Files (8).
+- Images (34).
+- Videos (6).
+
+These numbers are illustrative examples only. Never hardcode these values.
+
+All counts must be retrieved from the actual database.
+
+Counts must update immediately after creating, importing, moving, deleting, or restoring content.
+
+Display folder document counts where appropriate.
+
+All numeric values must use Persian numerals in the visible interface.
+
+---
+
+# 7. ADVANCED FOLDER AND SUBFOLDER MANAGEMENT
+
+Folder management is one of the most important features.
+
+Implement a fully functional hierarchical folder system.
+
+Features:
+
+- Create folders.
+- Create unlimited logically nested subfolders.
+- Rename folders.
+- Delete folders.
+- Move folders.
+- Copy folder structures.
+- Assign individual folder colors.
+- Choose folder icons.
+- Sort folders manually.
+- Sort folders by name.
+- Sort folders by creation date.
+- Drag-and-drop folder organization.
+- Display document counts.
+- Display subfolder counts.
+- Show the complete folder path.
+- Select multiple folders.
+- Move multiple folders.
+- Move multiple documents.
+- Copy documents between folders.
+
+Every folder can contain different types of documents and media.
+
+The folder structure must be stored persistently in the database.
+
+Prevent circular folder relationships.
+
+Before deleting a folder, clearly show the impact on its subfolders and documents.
+
+Provide safe deletion and Trash recovery functionality.
+
+Never permanently delete media files without appropriate user confirmation.
+
+---
+
+# 8. DOCUMENT MANAGEMENT
+
+Users must be able to create documents inside any selected folder.
+
+Supported document types:
+
+- General text document.
+- Quick note.
+- AI prompt.
+- Educational material.
+- Programming and code document.
+- Multimedia document.
+
+Each document must contain:
+
+- Unique document ID.
+- Title.
+- Structured content.
+- Document type.
+- Parent folder ID.
+- Creation date.
+- Last modified date.
+- Favorite status.
+- Optional description.
+- Attachment references.
+
+Document operations:
+
+- Create.
+- Open.
+- Edit.
+- Rename.
+- Copy.
+- Move.
+- Delete.
+- Restore.
+- Share.
+- Export.
+- Add to Favorites.
+- View editing history.
+
+Save all changes reliably.
+
+Prevent accidental document loss.
+
+---
+
+# 9. ADVANCED RICH TEXT EDITOR
+
+The document editor is a core feature and must be implemented professionally.
+
+Build an advanced mobile editor comparable to a lightweight Microsoft Word experience.
+
+The editor must support Persian and English text in the same document.
+
+Do not use a simple plain-text input as a replacement for the required rich text editor.
+
+Use a stable rich-text architecture capable of preserving formatting, tables, images, and multimedia references.
+
+The editor may use a native rich-text implementation or an embedded offline editor engine, provided the resulting functionality is complete, reliable, secure, and maintainable.
+
+Do not depend on remote websites or internet-hosted editor scripts.
+
+## 9.1 Text Formatting
+
+Implement:
+
+- Bold.
+- Italic.
+- Underline.
+- Strikethrough.
+- Text color.
+- Text background color.
+- Font family selection.
+- Font size from 10 to 24.
+- Heading styles.
+- Multiple heading levels.
+- Right alignment.
+- Left alignment.
+- Center alignment.
+- Paragraph spacing.
+- Line spacing.
+- Text indentation.
+- Numbered lists.
+- Bulleted lists.
+
+## 9.2 Advanced Editing Tools
+
+Implement:
+
+- Insert tables.
+- Add table rows.
+- Delete table rows.
+- Add table columns.
+- Delete table columns.
+- Insert hyperlinks.
+- Insert images.
+- Insert quotations.
+- Insert notes or information boxes.
+- Insert warning boxes.
+- Insert code blocks.
+- Insert dates and times.
+- Reorder content blocks.
+- Undo.
+- Redo.
+- Select All.
+- Cut.
+- Copy.
+- Paste.
+- Find and Replace.
+- Word counter.
+- Character counter.
+
+Formatting must be preserved after saving, closing, and reopening documents.
+
+## 9.3 Independent Text Block Operations
+
+Every text block or paragraph must support independent operations.
+
+When the user selects a text block, provide an accessible contextual action menu containing:
+
+1. Select.
+2. Copy.
+3. Edit.
+4. Delete.
+5. Share.
+
+Also support standard partial text selection.
+
+The user must be able to:
+
+- Select a portion of a paragraph.
+- Copy the selected portion.
+- Edit an individual text block.
+- Delete an individual block without deleting the entire document.
+- Share selected text.
+- Copy a complete paragraph.
+- Copy an entire document.
+- Share the complete document.
+
+Display appropriate confirmation messages after operations.
+
+Deleting a block must not accidentally delete unrelated document content.
+
+## 9.4 Special AI Prompt Tools
+
+Provide dedicated convenience operations for AI prompts:
+
+- Copy the entire prompt.
+- Copy selected text.
+- Copy individual blocks.
+- Preserve line breaks.
+- Preserve spaces.
+- Preserve code formatting.
+- Display prompts in a clean reading mode.
+- Edit prompts easily.
+- Share prompts.
+- Store prompts in user-created folders.
+
+## 9.5 Horizontal Search Bar at the Top of the Editor
+
+Place a compact horizontal search bar at the top of the document editor.
+
+It must appear horizontally in a single row.
+
+Include:
+
+- Search input.
+- Search action.
+- Clear search action.
+- Previous result.
+- Next result.
+- Replace functionality.
+
+Search within the currently opened document.
+
+Highlight matching text.
+
+Do not let the search bar consume excessive editor space.
+
+Search must work correctly with Persian, English, and mixed-language content.
+
+---
+
+# 10. EMOJI SUPPORT
+
+Add a rich emoji picker to the editor.
+
+Include categories such as:
+
+- Smileys and emotions.
+- People.
+- Animals.
+- Nature.
+- Food and drinks.
+- Activities.
+- Travel.
+- Objects.
+- Symbols.
+- Signs.
+
+Features:
+
+- Emoji search.
+- Recently used emojis.
+- Frequently used emojis.
+- Insert emoji into document text.
+- Correct emoji rendering.
+- Preserve emojis after saving and reopening documents.
+
+---
+
+# 11. IMAGE SUPPORT INSIDE THE EDITOR
+
+Users must be able to insert images directly into documents.
+
+Sources:
+
+- Device gallery.
+- Android file picker.
+- Images already stored in the application.
+
+Features:
+
+- Image preview.
+- Inline image display.
+- Enlarge image.
+- Reduce image size.
+- Resize image using drag handles.
+- Maintain original aspect ratio.
+- Full-screen image preview.
+- Remove image from document.
+- Move image within document.
+- Preserve original image quality.
+
+Resizing an image inside a document must not destroy or overwrite its stored original file.
+
+Store the image independently in application-managed storage and reference it from the document content.
+
+---
+
+# 12. AUDIO RECORDING AND AUDIO PLAYBACK
+
+Audio management and playback are mandatory core features.
+
+Do not implement audio as a decorative attachment that cannot actually play.
+
+Use a reliable Android multimedia playback implementation, preferably AndroidX Media3 / ExoPlayer.
+
+## 12.1 Audio Management
+
+Implement:
+
+- Record audio inside the application.
+- Import audio files from the device.
+- Save independent copies of imported audio.
+- Display an Audio Library.
+- Rename audio files.
+- Add descriptions.
+- Move audio files.
+- Delete and restore audio files.
+- Attach audio files to documents.
+
+Support commonly used Android-compatible audio formats, including MP3 and WAV.
+
+## 12.2 Audio Player
+
+Provide a functional audio player with:
+
+- Play.
+- Pause.
+- Resume.
+- Stop.
+- Seek forward.
+- Seek backward.
+- Playback progress bar.
+- Current playback time.
+- Total playback duration.
+- Volume control.
+- Clear playback state.
+- Appropriate playback error messages.
+
+## 12.3 Audio Playback Inside the Document Editor
+
+This is mandatory.
+
+Users must be able to insert an audio file directly into a document and play it without leaving the editor.
+
+Display an embedded audio player inside the document.
+
+The embedded player must support play, pause, resume, seeking, duration display, and volume control.
+
+The audio must remain playable after the document is saved and reopened.
+
+---
+
+# 13. VIDEO MANAGEMENT AND VIDEO PLAYBACK
+
+Video playback is also mandatory.
+
+Use AndroidX Media3 / ExoPlayer or another reliable compatible playback engine.
+
+## 13.1 Video Library
+
+Implement:
+
+- Import video from gallery.
+- Import video from device storage.
+- Save an independent video copy.
+- Display a video library.
+- Generate video thumbnails.
+- Rename video files.
+- Add descriptions.
+- Move video files.
+- Delete and restore video files.
+- Attach videos to documents.
+
+Support commonly used Android-compatible formats, including MP4.
+
+## 13.2 Video Player
+
+Implement:
+
+- Play.
+- Pause.
+- Resume.
+- Stop.
+- Seek forward.
+- Seek backward.
+- Playback progress bar.
+- Current playback time.
+- Total duration.
+- Volume control.
+- Full-screen playback.
+- Correct aspect ratio.
+- Landscape and portrait playback support where appropriate.
+
+## 13.3 Video Playback Inside the Document Editor
+
+This is mandatory.
+
+Users must be able to insert videos directly inside documents and play them without leaving the editor.
+
+Display an embedded video player with:
+
+- Preview thumbnail.
+- Play and pause controls.
+- Progress bar.
+- Seeking controls.
+- Volume control.
+- Full-screen option.
+
+Preserve the video attachment and its relationship with the document after saving and reopening.
+
+Both audio and video playback must work within the editor and in their respective media libraries.
+
+---
+
+# 14. INDEPENDENT STORAGE OF IMPORTED FILES
+
+This requirement is extremely important.
+
+When users import any external image, audio file, video file, or other attachment, the application must create a complete independent physical copy inside its own managed storage.
+
+Never rely only on the original file path or a temporary URI.
+
+Required import workflow:
+
+1. Receive the selected file using the Android Storage Access Framework or appropriate Android picker.
+2. Read the complete file content.
+3. Copy the actual file bytes into application-managed storage.
+4. Preserve the original filename and extension.
+5. Record file metadata in the database.
+6. Calculate a file checksum where appropriate.
+7. Connect the stored file to the selected folder or document.
+8. Verify that the copied file can actually be opened.
+
+After successful import:
+
+- Deleting the original photograph from the gallery must not delete the application's copy.
+- Deleting the original audio file must not delete the application's copy.
+- Deleting the original video must not delete the application's copy.
+- Renaming the source file must not break the stored copy.
+- Moving the original file must not break the stored copy.
+
+Store large media files in application-managed file storage rather than unnecessarily inserting their full binary contents into SQLite.
+
+Store metadata, IDs, relationships, and file locations in the database.
+
+Provide storage usage information.
+
+---
+
+# 15. IMPORT EXTERNAL DOCUMENTS AND FILES
+
+Provide a functional file import system.
+
+Supported document formats:
+
+| File Type | Extensions |
+|---|---|
+| Text | TXT |
+| Microsoft Word | DOC, DOCX |
+| Microsoft Excel | XLS, XLSX |
+| PDF | PDF |
+| Images | JPG, JPEG, PNG and other supported image formats |
+| Audio | MP3, WAV and supported audio formats |
+| Video | MP4 and supported video formats |
+
+## 15.1 TXT
+
+Import text into the application's document editor.
+
+Allow the user to edit and save the imported text.
+
+Preserve line breaks and character encoding as accurately as possible.
+
+## 15.2 DOC and DOCX
+
+Support importing Word files.
+
+Extract supported text and formatting into editable document content where possible.
+
+Preserve the original imported file as an attachment when full conversion cannot be guaranteed.
+
+## 15.3 XLS and XLSX
+
+Support importing Excel files.
+
+Provide a way to view the workbook and its worksheets.
+
+Extract and display spreadsheet content where supported.
+
+Preserve the original workbook file.
+
+Do not claim full spreadsheet editing if it has not actually been implemented.
+
+## 15.4 PDF
+
+Support importing and viewing PDF files inside the application.
+
+Where possible, allow text extraction for searching.
+
+Keep the original PDF intact.
+
+## 15.5 General Import Requirements
+
+- Import individual files.
+- Import multiple files.
+- Choose the destination folder.
+- Show import progress.
+- Show failures clearly.
+- Validate imported files.
+- Prevent incomplete imports from appearing as successful.
+- Maintain original file associations.
+
+If a format cannot be fully converted, preserve the original file and clearly communicate the limitation.
+
+Never discard the original merely because conversion was attempted.
+
+---
+
+# 16. SEARCH AND DOCUMENT DISCOVERY
+
+Implement a global search system.
+
+Search across:
+
+- Document titles.
+- Document content.
+- Imported text content.
+- File names.
+- File descriptions.
+- Folder names.
+- Subfolder names.
+
+Provide filtering by:
+
+- Document type.
+- Folder.
+- Creation date.
+- Modification date.
+- Media type.
+- Favorites.
+
+Support sorting by:
+
+- Name.
+- Creation date.
+- Last modified date.
+- Document type.
+
+Display the full folder path in search results.
+
+Support Persian and English search.
+
+Provide appropriate Persian character normalization for search without modifying the original stored document text.
+
+Do not implement tag-based or label-based search.
+
+---
+
+# 17. HOME SCREEN
+
+Create a clean, useful home screen.
+
+It should contain:
+
+1. Application title.
+2. Navigation drawer button.
+3. Main search field.
+4. Add New Content button.
+5. User-created frequently used folders, if available.
+6. Recent documents.
+7. Favorite documents.
+
+The Add New Content menu should include:
+
+- New Text Document.
+- Quick Note.
+- New AI Prompt.
+- New Folder.
+- Record Audio.
+- Import Image.
+- Import Video.
+- Import External File.
+
+Do not show empty or irrelevant cards.
+
+Do not create default folders or content.
+
+Use a friendly empty-state design when the database has no user content.
+
+---
+
+# 18. DATABASE AND OFFLINE-FIRST STORAGE
+
+Use a reliable local database based on SQLite and Room.
+
+The application must work offline for all core features.
+
+Store the following information:
+
+- Folder records.
+- Folder hierarchy relationships.
+- Document records.
+- Structured document content.
+- Formatting information.
+- Document metadata.
+- Favorite status.
+- Media metadata.
+- Attachment metadata.
+- Document-to-media relationships.
+- Editing history.
+- Backup metadata.
+- Application settings.
+
+Use unique, persistent IDs.
+
+Prevent:
+
+- Broken document references.
+- Broken media references.
+- Circular folder relationships.
+- Accidental duplicate records.
+- Database corruption.
+- Loss of formatting.
+- Incomplete imports.
+
+Use transactions for critical database operations.
+
+Use a persistent, structured content format for rich-text documents.
+
+For example, use a versioned JSON content model or another reliable structured representation capable of preserving:
+
+- Text blocks.
+- Paragraphs.
+- Formatting.
+- Tables.
+- Images.
+- Audio references.
+- Video references.
+- Links.
+- Embedded content.
+
+Do not store rich documents as plain text only.
+
+Keep database migrations compatible with future versions.
+
+---
+
+# 19. BACKUP AND RESTORE
+
+Backup and restore are essential features.
+
+Create a dedicated Backup and Restore section inside Settings.
+
+## 19.1 Full Backup
+
+A complete backup must include:
+
+- Entire database.
+- All folders.
+- All subfolders.
+- All documents.
+- Full rich-text content.
+- Document formatting.
+- Images.
+- Audio files.
+- Video files.
+- Other attachments.
+- Document-media relationships.
+- Required settings and metadata.
+- Cross-platform identifiers.
+
+The backup must include actual media file contents, not only database paths.
+
+## 19.2 Backup Options
+
+Provide:
+
+- Manual backup.
+- Automatic periodic backup.
+- User-selected backup destination.
+- Backup to shared device storage.
+- Backup to a user-selected Documents folder.
+- Backup to supported external storage.
+- Backup to USB storage where Android supports it.
+- Backup to an accessible cloud storage provider through the Android file picker.
+- Backup file size display.
+- Last backup date.
+- Backup success or failure status.
+- Backup integrity verification.
+
+Automatic backup should be optional and configured by the user.
+
+Do not silently overwrite the only available valid backup.
+
+## 19.3 Critical Android Uninstallation Requirement
+
+Android normally deletes private application data when an application is uninstalled.
+
+Therefore, never rely exclusively on the application's private internal storage to preserve information.
+
+Implement an external backup system that stores complete backup files outside the private application directory.
+
+Use the Android Storage Access Framework so the user can select a persistent backup location.
+
+Make it clear that:
+
+- Active database and media files are stored inside application-managed storage.
+- A separate backup copy must be stored outside the private application directory.
+- The application cannot guarantee recovery after uninstall if no external backup exists.
+- After reinstalling, the user may need to select the previous backup location again.
+
+Provide a clear setup option encouraging the user to select an external backup destination.
+
+Show the date and status of the latest successful backup.
+
+Warn the user when the backup is outdated or has not been created.
+
+## 19.4 Restore After Reinstallation
+
+After the application is reinstalled:
+
+1. Detect whether an external backup can be accessed.
+2. Offer a Restore Data option.
+3. Let the user select an existing backup file.
+4. Verify backup integrity.
+5. Validate backup schema version.
+6. Restore the database.
+7. Restore all folders and subfolders.
+8. Restore all documents and rich formatting.
+9. Restore all images, audio files, videos, and attachments.
+10. Rebuild document-media relationships.
+11. Verify restored content.
+12. Report successful or failed recovery.
+
+Restoration must preserve the original organization and content.
+
+Never claim successful restoration unless the restored information has been verified.
+
+Create a recovery point before destructive restore operations.
+
+---
+
+# 20. FUTURE WINDOWS APPLICATION COMPATIBILITY
+
+A Windows application with the same product name, Ganjineh Asnad, will be developed in the future.
+
+Design the Android application from the beginning to support data transfer between Android and Windows.
+
+Do not create an export format that depends exclusively on Android-specific database structures.
+
+## 20.1 Shared Interchange Format
+
+Create a documented, versioned, platform-independent interchange package.
+
+Proposed extension:
+
+`.gans`
+
+Proposed example filename:
+
+`GanjinehAsnad_Export.gans`
+
+The package should use a standard ZIP-compatible archive structure.
+
+Suggested internal structure:
+
+GanjinehAsnad_Export.gans
+- manifest.json
+- folders.json
+- documents.json
+- media/
+- attachments/
+- previews/
+- checksums.json
+
+The manifest should contain:
+
+- Package format version.
+- Application version.
+- Export timestamp.
+- Document count.
+- Folder count.
+- Media count.
+- Attachment count.
+- Required metadata.
+
+The JSON files must use UTF-8 encoding.
+
+Include persistent IDs for folders, documents, and media.
+
+Include relationships and parent folder references.
+
+Include SHA-256 checksums for file integrity verification.
+
+## 20.2 Export Capabilities
+
+Support exporting:
+
+- All application data.
+- One selected folder and its contents.
+- One document.
+- Selected documents.
+- Associated media and attachments.
+
+## 20.3 Import Capabilities
+
+The Android version must be able to import a valid `.gans` archive.
+
+The future Windows version must be able to import the same archive structure.
+
+Preserve:
+
+- Folder hierarchy.
+- Document content.
+- Rich text formatting.
+- Tables.
+- Images.
+- Audio files.
+- Videos.
+- Attachments.
+- Document relationships.
+- Creation and modification metadata.
+
+Provide conflict handling when imported IDs already exist.
+
+Possible choices:
+
+- Keep existing records.
+- Import as separate copies.
+- Replace selected records, with confirmation.
+- Merge only where safe and supported.
+
+Do not silently overwrite existing user information.
+
+Document the GANS format so the future Windows developer can implement full compatibility.
+
+---
+
+# 21. DOCUMENT EXPORT
+
+Support exporting documents to appropriate formats.
+
+Required formats:
+
+- TXT.
+- PDF.
+- DOCX.
+- XLSX for suitable tabular content.
+- Original attachment formats.
+- GANS.
+
+The user should be able to export:
+
+- A single document.
+- Multiple selected documents.
+- An entire folder.
+- An entire archive.
+
+Preserve formatting, tables, images, and attachments as far as the target format supports them.
+
+Do not claim perfect conversion when the destination format cannot preserve specific content.
+
+---
+
+# 22. FAVORITES AND TRASH
+
+## 22.1 Favorites
+
+Users must be able to mark documents as favorites.
+
+Features:
+
+- Add to Favorites.
+- Remove from Favorites.
+- Display all favorites.
+- Open favorite documents.
+- Sort favorite documents.
+
+Favorites must not move the original document from its existing folder.
+
+Do not implement a separate tag or label mechanism.
+
+## 22.2 Trash
+
+Deleted content should initially be moved to Trash.
+
+Features:
+
+- View deleted documents.
+- Restore documents.
+- Restore folders.
+- Restore folder hierarchies.
+- Permanently delete selected content.
+- Permanently delete all content after confirmation.
+- Display deletion dates.
+
+Avoid permanently deleting associated files until the relevant deletion operation is confirmed and processed safely.
+
+---
+
+# 23. SETTINGS
+
+Create a comprehensive Settings screen.
+
+Include:
+
+### Appearance
+- Light Mode.
+- Dark Mode.
+- Color theme selection.
+- Font family selection.
+- General font size.
+- Editor font family.
+- Editor default font size.
+
+### Editor
+- Default font size.
+- Auto-save behavior.
+- Editor display preferences.
+
+### Storage
+- Total application storage usage.
+- Media storage usage.
+- Attachment storage usage.
+- Available storage information.
+- Storage management.
+
+### Backup
+- Create backup.
+- Automatic backup settings.
+- Select backup destination.
+- Restore backup.
+- View previous backup status.
+
+### Security
+- Application password.
+- Biometric authentication.
+- Automatic application lock.
+- Privacy settings.
+
+### Data Transfer
+- Export GANS package.
+- Import GANS package.
+- Export all documents.
+- Import documents.
+
+### About
+- Application information.
+- Version information.
+- Developer contact details.
+
+All settings must be saved and restored correctly.
+
+---
+
+# 24. ABOUT THE APPLICATION AND DEVELOPER CONTACT
+
+Create a professional Persian About page.
+
+Use the following exact information:
+
+**Application Name:** گنجینه اسناد
+
+**English Name:** Ganjineh Asnad
+
+**Version:** ۱
+
+**Developer:** عباس ابراهیمی
+
+**Release Date:** آذرماه ۱۴۰۵
+
+**Contact the Developer:**
+
+WhatsApp:
+`@eb3134121`
+
+Baleh:
+`@Abc123`
+
+Eitaa:
+`@ma_mofid`
+
+**Useful Content Channel on Baleh:**
+
+`https://ble.ir/m_mofid`
+
+The three contact IDs must be displayed exactly as provided.
+
+Provide a copy-to-clipboard button next to each contact ID.
+
+Provide a clickable link for the Baleh channel using the supplied URL.
+
+Do not invent alternative usernames, phone numbers, or contact URLs.
+
+Use a clean and attractive About screen that matches the application's theme.
+
+---
+
+# 25. PERSIAN LANGUAGE AND NUMBER FORMATTING
+
+The entire application interface must be Persian and correctly right-to-left.
+
+All visible interface-generated numbers must use Persian digits.
+
+Examples:
+
+- Document counters.
+- Folder counters.
+- File counters.
+- Dates.
+- Times.
+- Audio durations.
+- Video playback times.
+- File sizes.
+- Font sizes.
+- Search result counts.
+- Backup sizes.
+- Settings values.
+- Version information.
+
+Example:
+
+۱۲۵ سند
+
+۱۸ پوشه
+
+آذر ۱۴۰۵
+
+۰۸:۳۰
+
+۱٫۵ مگابایت
+
+Use Persian date presentation and support the Solar Hijri calendar.
+
+Preserve actual numerical characters in user-created documents and filenames. Do not automatically rewrite user content merely to satisfy the Persian UI numbering requirement.
+
+Implement consistent Persian digit formatting throughout all application-generated interface elements.
+
+---
+
+# 26. SECURITY AND PRIVACY
+
+Provide:
+
+- Application password protection.
+- Biometric authentication where supported.
+- Optional automatic locking.
+- Secure handling of sensitive data.
+- Safe local storage.
+- Minimum necessary Android permissions.
+- Proper permission request explanations.
+
+The core application must not require account creation or an internet connection.
+
+Do not transmit personal documents, audio recordings, photos, videos, or backup content to external servers without explicit user authorization.
+
+Do not include advertisements or unnecessary third-party tracking.
+
+Keep cloud synchronization as an optional future extension, not a dependency for core functionality.
+
+Never delete user files without the appropriate confirmation.
+
+---
+
+# 27. PERFORMANCE AND RELIABILITY
+
+The application must:
+
+- Run smoothly on commonly used Android devices.
+- Work offline.
+- Handle large documents.
+- Handle large image files.
+- Handle large audio files.
+- Handle large video files.
+- Use efficient media loading.
+- Use thumbnails for large image and video collections.
+- Prevent unnecessary database operations.
+- Preserve data during unexpected application closure.
+- Protect against incomplete file copying.
+- Show progress for large import, export, backup, and restore operations.
+- Prevent database and media reference corruption.
+- Preserve documents during application upgrades.
+- Avoid unnecessary battery and memory consumption.
+
+Display clear Persian error messages.
+
+Do not report an operation as successful until the actual operation has completed and its important results have been verified.
+
+---
+
+# 28. DEVELOPMENT WORKFLOW
+
+Develop the complete product in a controlled sequence.
+
+## Phase 1: Foundation
+
+- Create the Android project.
+- Configure Kotlin and Gradle.
+- Implement the application architecture.
+- Implement the database.
+- Build the Persian RTL navigation system.
+- Build the empty initial home screen.
+- Implement folders and subfolders.
+- Implement document creation and management.
+- Implement the editor architecture.
+
+## Phase 2: Advanced Editor
+
+- Rich text editing.
+- Independent text block operations.
+- Formatting toolbar.
+- Search bar.
+- Emojis.
+- Image insertion.
+- Image resizing.
+- Embedded audio and video players.
+- Auto-save.
+- Document formatting persistence.
+
+## Phase 3: Multimedia Management
+
+- Audio recording.
+- Audio library.
+- Audio playback.
+- Video library.
+- Video playback.
+- Embedded multimedia playback.
+- Image management.
+- External media imports.
+- Independent media storage.
+
+## Phase 4: Document Import and Export
+
+- TXT import.
+- DOC and DOCX import.
+- XLS and XLSX import.
+- PDF import and viewing.
+- Document export.
+- GANS package export and import.
+
+## Phase 5: Backup and Recovery
+
+- Full backup.
+- External backup storage.
+- Automatic backup options.
+- Backup validation.
+- Full restore.
+- Reinstallation recovery workflow.
+
+## Phase 6: Appearance and Security
+
+- Font integration.
+- Color themes.
+- Light and dark modes.
+- Font size settings.
+- Password protection.
+- Biometric authentication.
+- About screen.
+- Developer contact links.
+
+## Phase 7: Quality Assurance
+
+Perform real functionality tests.
+
+Fix errors.
+
+Run a complete Gradle build.
+
+Build the actual release APK.
+
+Verify the APK.
+
+Create the final project ZIP.
+
+Do not stop after generating source code or basic UI screens.
+
+---
+
+# 29. MANDATORY ACCEPTANCE TESTS
+
+Before declaring the application complete, test the following on a real Android device or a reliable Android test environment.
+
+### Initial State
+1. First installation shows an empty content area.
+2. No predefined folders exist.
+3. No sample documents exist.
+4. No predefined categories or tags exist.
+5. User can create the first folder and document.
+
+### Folder Management
+6. Create multiple folders.
+7. Create deeply nested subfolders.
+8. Rename folders.
+9. Move folders.
+10. Move documents between folders.
+11. Verify correct folder counts.
+
+### Document Editor
+12. Create documents.
+13. Edit rich text.
+14. Change fonts.
+15. Change font sizes.
+16. Insert tables.
+17. Insert images.
+18. Resize images.
+19. Insert emojis.
+20. Select text.
+21. Copy selected text.
+22. Edit an individual text block.
+23. Delete an individual text block.
+24. Share selected text.
+25. Verify Undo and Redo.
+26. Search within documents.
+27. Verify formatting after closing and reopening documents.
+
+### Audio
+28. Record audio.
+29. Import audio.
+30. Play audio in the Audio Library.
+31. Pause and resume playback.
+32. Seek through audio.
+33. Insert audio into a document.
+34. Play audio inside the editor.
+
+### Video
+35. Import video.
+36. Play video inside the Video Library.
+37. Pause and resume playback.
+38. Seek through video.
+39. Play embedded video inside the editor.
+40. Test full-screen playback.
+
+### Independent File Storage
+41. Import an image from the gallery.
+42. Delete the original image from the gallery.
+43. Verify that the image still works in Ganjineh Asnad.
+44. Repeat the same test with audio.
+45. Repeat the same test with video.
+46. Verify that renamed or moved original files do not break imported copies.
+
+### External Documents
+47. Import TXT.
+48. Import DOCX.
+49. Import DOC where supported.
+50. Import XLSX.
+51. Import XLS where supported.
+52. Import PDF.
+53. Verify that unsupported conversions preserve the original files.
+
+### Search and Interface
+54. Verify Persian search.
+55. Verify English search.
+56. Verify Persian numerals across the interface.
+57. Verify live menu counts.
+58. Verify all themes.
+59. Verify all available fonts when their actual font files are supplied.
+60. Verify saved appearance preferences after restarting.
+
+### Backup and Recovery
+61. Create a complete backup.
+62. Verify that the backup contains actual media files.
+63. Verify backup integrity.
+64. Restore the backup.
+65. Verify documents and media after restoration.
+66. Test the external backup recovery workflow after uninstalling and reinstalling the application, using the previously created external backup.
+
+### Windows Compatibility
+67. Export a complete GANS archive.
+68. Validate the internal archive structure.
+69. Validate manifest and checksums.
+70. Re-import the GANS archive.
+71. Verify the folder hierarchy and multimedia relationships.
+
+### Final Build
+72. Build a genuine release APK.
+73. Verify its signing certificate.
+74. Verify that it is not debug-signed.
+75. Verify `android:debuggable` is false.
+76. Verify APK package integrity.
+77. Include the APK in the root of the final ZIP.
+78. Test installation on an Android device.
+
+Do not mark a test as passed unless it was actually performed.
+
+---
+
+# 30. REQUIRED FINAL PROJECT DELIVERABLES
+
+Deliver a complete and maintainable Android Studio project.
+
+The final output must contain:
+
+1. Complete Android source code.
+2. Full project structure.
+3. Gradle build configuration.
+4. Database implementation.
+5. UI implementation.
+6. Editor implementation.
+7. Media management implementation.
+8. Backup and restore implementation.
+9. GANS import/export implementation.
+10. Required resources and supplied font assets.
+11. README documentation.
+12. Build instructions.
+13. Changelog.
+14. Test report.
+15. Genuine installable release APK.
+
+The final APK must be named exactly:
+
+`app-release.apk`
+
+The final downloadable ZIP must contain both the complete Android project and the APK.
+
+---
+
+# 31. MANDATORY ANDROID RELEASE APK AND PROJECT ZIP DELIVERY REQUIREMENTS
+
+IMPORTANT: ANDROID RELEASE APK LOCATION
+
+When building this Android application, generate a genuine, installable, properly release-signed APK and place the final APK file directly in the ROOT folder of the project ZIP.
+
+## REQUIRED RESULT AFTER EXTRACTING THE ZIP
+
+The ZIP itself must have this top-level structure:
+
+GanjinehAsnad_Project.zip
+- app-release.apk
+- README_FA.txt
+- CHANGELOG.txt
+- project source files and folders
+- Gradle files
+- application resources
+- required project documentation
+
+The APK must be directly accessible at the top level after extracting the ZIP.
+
+## STRICT REQUIREMENTS
+
+1. The APK must be named exactly: `app-release.apk`.
+2. The APK must be directly inside the main/root project folder, alongside the other top-level project files and folders.
+3. Do NOT put the only APK copy inside `app/build/outputs/apk/release/` or any nested folder. Copy the completed APK from the actual build output to the root folder before packaging the ZIP.
+4. Include `app-release.apk` in the final downloadable ZIP itself, so I can extract the ZIP and immediately find the APK in the main folder.
+5. Build a real RELEASE APK, not a debug APK.
+6. Verify the signing certificate and ensure `android:debuggable` is false. Do not claim release signing unless verified.
+7. Use a developer-provided release keystore and signing credentials through a secure configuration method. Never hardcode secrets or include private signing credentials in the public source ZIP.
+8. If no valid release keystore is available, clearly report that signing is blocked and identify what is required. Never substitute a debug key while claiming a release-signed build.
+9. Do not create a placeholder APK or an empty file. Confirm the root-level APK exists and is a valid Android APK before packaging.
+10. Do not modify the application's requested features, design, application ID, version, or source code just to accomplish this packaging task.
+11. Verify the APK's package name, version, signature, and installability.
+12. The final ZIP must include the complete project and the actual APK.
+13. If the environment cannot build, sign, or include the APK in the ZIP, explain the exact limitation instead of claiming success or providing a fake link.
+
+## FINAL DELIVERY CONFIRMATION
+
+At the end, provide:
+
+- The final downloadable project ZIP link.
+- Confirmation that `app-release.apk` is located directly in the ZIP root.
+- APK file size.
+- Release signing verification result.
+- APK package and version information.
+- Confirmation of successful APK validation.
+- A list of tests actually performed.
+- Any remaining limitations or missing assets.
+
+NO PLACEHOLDER APKs.
+
+NO FALSE BUILD SUCCESS CLAIMS.
+
+NO FAKE DOWNLOAD LINKS.
+
+---
+
+# 32. FINAL DEVELOPMENT PRIORITIES
+
+The priorities are:
+
+**Priority 1 — Data Integrity**
+
+The user's documents and multimedia files must never be lost through ordinary application operations.
+
+**Priority 2 — Complete Editor**
+
+The editor must genuinely support rich text, independent text operations, images, audio, video, and formatting persistence.
+
+**Priority 3 — Multimedia Management**
+
+Audio and video must be genuinely playable both inside the editor and in their dedicated library sections.
+
+**Priority 4 — Reliable Backup and Recovery**
+
+The application must provide full external backup and recovery after reinstalling, subject to the availability of a valid external backup.
+
+**Priority 5 — Windows Compatibility**
+
+The data model and GANS export format must support future transfer to the Windows application.
+
+**Priority 6 — Professional User Experience**
+
+The application must remain visually modern, minimal, intuitive, and entirely Persian.
+
+**Priority 7 — Genuine Delivery**
+
+The final deliverable must include a complete Android project and an actual release-signed `app-release.apk` inside the root of a downloadable ZIP.
+
+---
+
+# FINAL INSTRUCTION
+
+Now begin developing the complete Ganjineh Asnad Android application according to every requirement in this master specification.
+
+Do not silently omit features.
+
+Do not replace complex requirements with basic demonstrations.
+
+Do not create predefined user content.
+
+Do not implement tags or predefined categories.
+
+Do not rely on original gallery file paths for imported media.
+
+Do not implement fake audio or video players.
+
+Do not claim that an import, backup, restore, or media playback feature works unless it has actually been implemented and tested.
+
+Give special attention to the rich text editor, independent multimedia storage, embedded audio and video playback, full backup and recovery, and the cross-platform GANS data format.
+
+Build the application in a modular and maintainable way.
+
+Run the required tests, fix build errors, generate the genuine release APK, verify its signature, and package the complete project and APK into the final downloadable ZIP.
+
+The final goal is a fully working, reliable, professional, installable Android application that can serve as the foundation for a future Windows version of Ganjineh Asnad.
